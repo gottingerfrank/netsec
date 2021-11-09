@@ -2,16 +2,17 @@
 
 import socket
 
-host = "192.168.1.101"
-ports = [21, 22, 25, 3306]
+HOST = "192.168.1.101"
+PORTS = [21, 22, 25, 3306]
+BUFFERSIZE = 1024
 
-for i in range(len(ports) - 1):
+for i in range(len(PORTS) - 1):
 
-    with socket.socket() as sock:
-        port = ports[i]
-        print(f"This is the Banner for Port {port}")
+    with socket.socket() as s:
+        port = PORTS[i]
+        print(f"This is the Banner for port {port}")
 
-        sock.connect("192.168.1.101", port)
-        data = sock.recv(1024)
+        s.connect("192.168.1.101", port)
+        data = s.recv(BUFFERSIZE)
         print(data)
 
