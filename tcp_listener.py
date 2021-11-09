@@ -20,8 +20,7 @@ while True:
     if not data:
         break
     print(f"[+] Received data: ", data)
-    con.send(data) #echo back received data (test)
+    cosend(data) #echo back received data (test)
 
 con.close()
 print(f"[-] Connection closed ...")
-

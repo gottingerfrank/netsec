@@ -1,5 +1,3 @@
-#! /opt/homebrew/bin/python3
-
 # Simple SSH Banner Grabber
 
 import socket

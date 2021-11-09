@@ -1,10 +1,11 @@
 #! /usr/bin/python3
 
+import sys
+import time
+
 def print_faces(face='(x_x) ', num=3):
     """Prints {num} number of Faces after another w/o a newline.
     Returns {num} faces printed"""
-    import sys
-    import time
 
     end = num + 1
     count = 0
@@ -23,7 +24,7 @@ def main(face='+_+ ', num=5):
     print_faces(face, num)
     sys.exit(num)
 
-# Run as script with Args IF args exist AND is NOT imported as module
+# Run as script with ARGS IF ARGS exist AND script NOT imported as module
 
 if __name__ == '__main__':
     # if there are ARGS ...
