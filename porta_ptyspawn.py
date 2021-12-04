@@ -1,4 +1,4 @@
-#! /opt/homebrew/bin/python3
+#! /usr/bin/python3
 
 import os
 import sys
@@ -49,13 +49,14 @@ def get_arch() -> str:
         arch_found = True
 
     except os.error as ArchError:
-        print('[-] There was a problem identifying this systems Processor-Architecture...')
+        print(
+            '[-] There was a problem identifying this systems Processor-Architecture...')
         print(str(ArchError))
 
     sys.exit(2)
 
 
-def char_timer(s:int) -> int:
+def char_timer(s: int) -> int:
     """Takes one int: Number of Seconds - as Argument.
     Returns one int: Number of chars printed."""
     end = s + 1
@@ -79,12 +80,12 @@ def char_timer(s:int) -> int:
 
 
 def main():
-    get_platform()
-    get_arch()
+    OS_PLATFORM = get_platform()
+    OS_ARCH = get_arch()
 
-    if get_platform() and get_arch():
+    if OS_PLATFORM and OS_ARCH:
         print(
-            '''
+            '''            
             ***************************************
             ***  Script executed successfully!  ***
             ***************************************
@@ -103,10 +104,11 @@ def main():
 # to determine specific OS/Arch Combination
 # and spawn an appropriate shell ...
 
-# cases: 
+# cases:
 
 # ...
 # to be continued ... (18.9.2021 - 8:15am)
+
 
 def main():
     if __name__ == '__main__':

