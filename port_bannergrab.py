@@ -15,4 +15,3 @@ for i in range(len(PORTS) - 1):
         s.connect("192.168.1.101", port)
         data = s.recv(BUFFERSIZE)
         print(data)
-

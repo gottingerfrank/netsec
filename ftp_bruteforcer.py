@@ -35,7 +35,6 @@ def spin(found=False):
     """Prints spinning timer bar(s), with ARG 'bars' #bars.
     Stops when ARG 'found' (global 'isfound') evaluates to True.
     Default: 10 bars + autostop if NO ARGS given"""
-    global isfound
 
     while True:
         spinner = "\\|/-"
@@ -46,10 +45,9 @@ def spin(found=False):
             print("-", end='', flush=True)
             for spin in range(25):
                 # break statement here when task completed
-                found = isfound
                 if found:
                     print()
-                    break
+                    return
                 time.sleep(0.1)
                 print("\b" + spinner[spin % 4], end='', flush=True)
             print("\b*", end='', flush=True)

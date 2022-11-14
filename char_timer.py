@@ -3,7 +3,7 @@
 def char_timer(s: int): -> int 
     """chartimer (Loading/Time bar using ASCII Chars"""
     import time
-    
+
     end = s + 1
     num = 0
 
