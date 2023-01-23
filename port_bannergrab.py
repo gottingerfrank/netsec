@@ -6,7 +6,7 @@ HOST = "192.168.1.101"
 PORTS = [21, 22, 25, 3306]
 BUFFERSIZE = 1024
 
-for i in range(len(PORTS) - 1):
+for i in range(len(PORTS)):
 
     with socket.socket() as s:
         port = PORTS[i]
