@@ -4,7 +4,8 @@
 
 import socket
 
-host_ip = ("192.168.0.1", 22)  # set host ssh connection tuple (IP_ADDR, PORT)
+# set host ssh connection tuple (IP_ADDR, PORT), proto.TCP
+host_ip = ("192.168.0.1", 22)
 
 s = socket.socket()
 s.connect((host_ip))

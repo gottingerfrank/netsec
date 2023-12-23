@@ -15,7 +15,7 @@ import time
 
 def get_platform() -> str:
     """Finds the Operating System platform/family:
-    e.g: 'win32' | 'darwin' | 'linux' | [...] 
+    e.g: 'win32' | 'darwin' | 'linux' | [...]
     Returns system platform found, as a String."""
 
     platform_found = False
@@ -23,20 +23,17 @@ def get_platform() -> str:
     # platform eg.: 'darwin' | 'win32' | 'linux' | 'aix' | ...
     try:
         OS_PLATFORM = sys.platform
-        print(f'[+] Operating System identified as: *** {OS_PLATFORM} ***')
+        print(f"[+] Operating System identified as: *** {OS_PLATFORM} ***")
 
         platform_found = True
 
-    except os.error as PlatformError:
-        print('[-] There was a problem identifying this systems OS-Platform...')
-        print str(PlatformError)
-
-    sys.exit(1)
+    except os.error as e:
+        print("[-] There was a problem identifying this systems OS-Platform: ", e)
 
 
 def get_arch() -> str:
     """Finds the Processor Architecture of the systems OS.
-    e.g: 'x86' | 'x86-64' | 'arm64' | [...] 
+    e.g: 'x86' | 'x86-64' | 'arm64' | [...]
     Returns Architecture found, as a String"""
 
     arch_found = False
@@ -44,16 +41,13 @@ def get_arch() -> str:
     # architecture eg.: 'x86' | 'x86-64' | 'arm64' | 'arm32'
     try:
         OS_ARCH = os.uname().machine
-        print(f'[+] Processor Architecture identified as: *** {OS_ARCH} ***')
-
+        print(f"[+] Processor Architecture identified as: *** {OS_ARCH} ***")
         arch_found = True
-
-    except os.error as ArchError:
+    except os.error as e:
         print(
-            '[-] There was a problem identifying this systems Processor-Architecture...')
-        print(str(ArchError))
-
-    sys.exit(2)
+            "[-] There was a problem identifying this systems Processor-Architecture:",
+            e,
+        )
 
 
 def char_timer(s: int) -> int:
@@ -64,15 +58,15 @@ def char_timer(s: int) -> int:
     # start charTimer printing ...
     for i in range(end):
         if i == 0:
-            print("# ", end='')
+            print("# ", end="")
             time.sleep(2)
             num += 2
         elif i == s:
-            print('.')
+            print(".")
             time.sleep(1)
             break
         else:
-            print('.', end='')
+            print(".", end="")
             time.sleep(1)
             num += 1
     # Return number of chars printed...
@@ -85,20 +79,22 @@ def main():
 
     if OS_PLATFORM and OS_ARCH:
         print(
-            '''            
+            """            
             ***************************************
             ***  Script executed successfully!  ***
             ***************************************
-            ''')
+            """
+        )
         time.sleep(1.4)
-        print('[+] Found system platform (OS)')
+        print("[+] Found system platform (OS)")
         time.sleep(0.7)
-        print('[+] Found processor architecture (SysArch)')
+        print("[+] Found processor architecture (SysArch)")
         time.sleep(0.7)
-        print('[+] *** Now spawning Shell ***\n')
+        print("[+] *** Now spawning Shell ***\n")
         time.sleep(2)
-
+        # start char timer
         char_timer(7)
+
 
 # case clauses OR if-elif-else clauses:
 # to determine specific OS/Arch Combination
@@ -111,5 +107,5 @@ def main():
 
 
 def main():
-    if __name__ == '__main__':
+    if __name__ == "__main__":
         main()
