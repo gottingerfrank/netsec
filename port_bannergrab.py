@@ -4,12 +4,16 @@ host = "192.168.0.1"
 ports = (20, 21, 22, 80, 143, 443)
 
 
+<<<<<<< HEAD
 def grab_banners(host, ports):
     """simple banner grabber for a set IP Address and set ports
     param host: str
     param ports: tuple
     """
     import socket
+=======
+for i in range(len(PORTS)):
+>>>>>>> 313755691cda610c3dbeaf0ccad3e624fd29761b
 
     BUFFERSIZE = 1024
 

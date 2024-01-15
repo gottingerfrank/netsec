@@ -1,6 +1,10 @@
-# netsec
+# netsec 🥍 🏴‍☠️ 
+-----
+```
+:: NetSec ::
 
-> :: NetSec ::
-> Various Cyber Security scripts.
-> Partly work in progress ...
-> 
+Cyber Security scripts
+
+```
+-----
+
