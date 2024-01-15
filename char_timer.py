@@ -1,6 +1,7 @@
-#! /usr/bin/python3
+#! /usr/bin/env python3
 
-def char_timer(s: int): -> int 
+
+def char_timer(s):
     """chartimer (Loading/Time bar using ASCII Chars"""
     import time
 
@@ -9,16 +10,18 @@ def char_timer(s: int): -> int
 
     for i in range(end):
         if i == 0:
-            print("# ", end='')
+            print("[", end='') # start char
             time.sleep(2)
             num += 2
         elif i == s:
-            print('.')
+            print(']') # end char
             time.sleep(1)
             break
         else:
-            print('.', end='')
+            print('*', end='') # progress char
             time.sleep(1)
             num += 1
-
+    # print(']')
     return num
+
+char_timer(10)
