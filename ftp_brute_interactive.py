@@ -1,4 +1,5 @@
-#! /usr/bin/python3
+#!/usr/bin/env python3
+
 
 import ftplib
 import os
@@ -19,7 +20,7 @@ LOGHEADER = '''
 '''
 HEADER = '''
 *****************************************************
-* ||//-\\|| FTP Bruteforcer ~ by evagreen ||//-\\|| *
+* ||//-\\|| FTP Bruteforcer ~ by ||//-\\|| *
 *****************************************************
 '''
 FOOTER = '''                                              
