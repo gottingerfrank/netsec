@@ -10,18 +10,19 @@ def char_timer(s):
 
     for i in range(end):
         if i == 0:
-            print("[", end='') # start char
+            print("|", end='') # start char
             time.sleep(2)
             num += 2
         elif i == s:
-            print(']') # end char
+            print('|') # end char
             time.sleep(1)
             break
         else:
-            print('*', end='') # progress char
+            print('|', end='') # progress char
             time.sleep(1)
             num += 1
-    # print(']')
+
     return num
 
+# test function
 char_timer(10)
