@@ -1,8 +1,9 @@
 #! /usr/bin/python3
 
 
-host = "192.168.0.1"
-ports = (20, 21, 22, 80, 143, 443)
+#set constants
+HOST = "192.168.0.1"
+PORTS = (20, 21, 22, 80, 143, 443)
 
 
 def grab_banners(host, ports):
@@ -11,6 +12,7 @@ def grab_banners(host, ports):
     param ports: tuple
     """
     import socket
+    import time
 
     BUFFERSIZE = 1024
 
@@ -19,15 +21,16 @@ def grab_banners(host, ports):
             result = s.connect_ex((host, port))
             if result != 0:
                 print(f"[-] Could not connect to host {host} on port {port}")
-            print(f"[+] Connecting to host {host} on port {port}")
-            print(f"********** Data **********")
-            while True:
-                data = s.recv(BUFFERSIZE)
-                if not data:
-                    break
-                print(data)
-            print(f"*********** End **********")
+            else:
+                print(f"[+] Connecting to host {host} on port {port}")
+                print(f"********** Data start: {host}:{port} @ {time.ctime()} **********")
+                while True:
+                    data = s.recv(BUFFERSIZE)
+                    if not data:
+                        break
+                    print(data.decode())
+                print(f"*********** Data end: {host}:{port} @ {time.ctime()} **********")
 
 
 if __name__ == "__main__":
-    grab_banners(host, ports)
+    grab_banners(HOST, PORTS)
