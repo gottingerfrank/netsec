@@ -1,18 +1,22 @@
 #!/usr/bin/env python3
 
 
-# imports
+'''
+Basic TCP server
+'''
+
+
 import socket
 
 
-TCP_IP = "192.168.0.15"
-TCP_PORT = 5555
-BUFFER_SIZE = 100  # Adjust Buffer where needed
+IP = "192.168.0.15"
+PORT = 5555
+BUFFER = 100  # Adjust Buffersize if needed
 
 
 # create tcp socket and bind to IP-Address
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.bind((TCP_IP, TCP_PORT))
+s.bind((IP, PORT))
 s.listen(1)
 
 
@@ -23,8 +27,8 @@ print("[*] Connection from address: ", addr)
 
 # receive data and print out
 while True:
-    data = con.recv(BUFFER_SIZE)
-    if not data:  # if there is no data, stop
+    data = con.recv(BUFFER)
+    if not data:  # if there is no more data, stop
         break
     print("[+] Received data: ", data)
     con.send(data)  # echo back received data (test)
