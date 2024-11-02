@@ -64,7 +64,7 @@ def usage():
 
 def main(*args, **kwargs):
     try:
-        server, user, password_list = sys.argv[1:]
+        server, user, password_list = sys.argv[1:4]
         result = ftp_bruteforce(server, user, password_list)
         
         if result is not None:
