@@ -19,7 +19,7 @@ def spin(bars=10):
     # Global variable to control when to stop the spinner
     global isfound
 
-    spinner = r"\\|/-"
+    spinner = '\\|/-'
     printed = 0
 
     while not isfound and printed != bars:
@@ -39,4 +39,5 @@ def spin(bars=10):
 
 
 # test spinner
-spin(7)
+if __name__ == '__main__':
+    spin()

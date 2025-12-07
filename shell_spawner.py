@@ -7,6 +7,7 @@ import time
 
 isfound = False
 
+
 def get_platform():
     try:
         OS_PLATFORM = sys.platform
@@ -16,39 +17,46 @@ def get_platform():
         print("[-] There was a problem identifying this system's OS-Platform: ", e)
         return None
 
+
 def get_arch():
     try:
         OS_ARCH = os.uname().machine
         print(f"[+] Processor Architecture identified as: {OS_ARCH}")
         return OS_ARCH
     except os.error as e:
-        print("[-] There was a problem identifying this system's Processor-Architecture:", e)
+        print(
+            "[-] There was a problem identifying this system's Processor-Architecture:",
+            e,
+        )
         return None
+
 
 def spin(bars=10):
     """Displays a spinning progress bar using ASCII chars"""
     import time
 
     global isfound
-    spinner = r"\\|/-"
+    spinner = "\\|/-"
     printed = 0
 
     while not isfound and printed != bars:
-        print("-", end='', flush=True)
+        print("-", end="", flush=True)
 
         for i in range(25):
             time.sleep(0.1)
-            print("\b" + spinner[i % 4], end='', flush=True)
+            print("\b" + spinner[i % 4], end="", flush=True)
 
-        print("\b|", end='', flush=True)
+        print("\b|", end="", flush=True)
         printed += 1
 
     return printed if printed else None
+
 
 def toggle_spin():
     """Function to stop the spinner"""
     global isfound
     isfound = not isfound
+
 
 def main():
     OS_PLATFORM = get_platform()
@@ -73,71 +81,73 @@ def main():
         if OS_PLATFORM == "linux" and "64" in OS_ARCH:
             print("[+] Linux 64-bit detected: Spawning Linux shell.")
             try:
-                pty.spawn('/bin/bash')
+                pty.spawn("/bin/bash")
             except FileNotFoundError:
                 try:
-                    pty.spawn('/bin/zsh')
+                    pty.spawn("/bin/zsh")
                 except FileNotFoundError as e:
-                    print(f'{e}: Could not find Bash or Zshell')
+                    print(f"{e}: Could not find Bash or Zshell")
             exit(2)
 
         elif OS_PLATFORM == "win32" and "64" in OS_ARCH:
             print("[+] Windows 64-bit detected: Trying Powershell")
             try:
-                pty.spawn(r'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe')
+                pty.spawn("C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe")
             except Exception as e:
-                print(f'[-] Could not spawn Powershell: {e}')
+                print(f"[-] Could not spawn Powershell: {e}")
                 try:
-                    pty.spawn(r'C:\Windows\System32\cmd.exe')
+                    pty.spawn(r"C:\Windows\System32\cmd.exe")
                 except FileNotFoundError as e:
-                    print(f'{e}: Could not find any Windows shell: Exiting')
+                    print(f"{e}: Could not find any Windows shell: Exiting")
             exit(2)
 
         elif OS_PLATFORM == "win32" and "32" in OS_ARCH:
             print("[+] Windows 32-bit detected: Trying Powershell...")
             try:
-                pty.spawn(r'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe')
+                pty.spawn("C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe")
             except:
-                print('[•] Checking other directories for Powershell executables...')
+                print("[•] Checking other directories for Powershell executables...")
             try:
-                pty.spawn(r'C:\Windows\SysWOW64\WindowsPowerShell\v1.0\powershell.exe')
+                pty.spawn("C:\Windows\SysWOW64\WindowsPowerShell\v1.0\powershell.exe")
             except FileNotFoundError as e:
-                print(f'{e}')
-                print('[-] Could not spawn Powershell')
-                print('[+] Trying cmd.exe... ')
+                print(f"{e}")
+                print("[-] Could not spawn Powershell")
+                print("[+] Trying cmd.exe... ")
                 try:
-                    pty.spawn('C:\Windows\System32\cmd.exe')
+                    pty.spawn("C:\Windows\System32\cmd.exe")
                 except FileNotFoundError as e:
-                    print(f'{e}: Could not find any Windows shell: Exiting')
+                    print(f"{e}: Could not find any Windows shell: Exiting")
             exit(2)
 
         elif OS_PLATFORM == "darwin":
             print("[+] macOS detected. Spawning macOS shell...")
             try:
-                pty.spawn('/bin/bash')  # Use shell of choice for macOS/darwin
+                pty.spawn("/bin/bash")  # Use shell of choice for macOS/darwin
             except FileNotFoundError as e:
-                print(f'{e}: Could not find specified shell for macOS: Exiting')
+                print(f"{e}: Could not find specified shell for macOS: Exiting")
             exit(2)
 
         elif OS_PLATFORM == "solaris":
             print("[+] Solaris Unix detected. Spawning shell...")
             try:
-                pty.spawn('/bin/sh')  # Use shell of choice for Solaris
+                pty.spawn("/bin/sh")  # Use shell of choice for Solaris
             except FileNotFoundError as e:
-                print(f'{e}: Could not find specified shell for Solaris: Exiting')
+                print(f"{e}: Could not find specified shell for Solaris: Exiting")
             exit(2)
 
         elif OS_PLATFORM == "bsd":
             print("[+] BSD Unix detected. Spawning shell...")
             try:
-                pty.spawn('/bin/sh')  # Use shell of choice for BSD
+                pty.spawn("/bin/sh")  # Use shell of choice for BSD
             except FileNotFoundError as e:
-                print(f'{e}: Could not find specified shell for BSD: Exiting')
+                print(f"{e}: Could not find specified shell for BSD: Exiting")
             exit(2)
 
     else:
         print("[-] Found unsupported OS/CPU Architecture: Exiting")
         exit(1)
 
+
 if __name__ == "__main__":
     main()
+    

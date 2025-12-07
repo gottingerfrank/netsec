@@ -16,5 +16,6 @@
     "workbench.preferredDarkColorTheme": "Default Dark+",
     "workbench.preferredHighContrastColorTheme": "Default Dark+",
     "workbench.preferredHighContrastLightColorTheme": "Tomorrow",
-    "workbench.preferredLightColorTheme": "Default Light+"
+    "workbench.preferredLightColorTheme": "Default Light+",
+    "code-runner.enableAppInsights": false
 }

@@ -34,7 +34,7 @@ def spin(bars=10):
 
     global isfound
 
-    spinner = "\\|/-"
+    spinner = '\\|/-'
     printed = 0
 
     while not isfound and printed != bars:
@@ -56,7 +56,12 @@ def spin(bars=10):
 def toggle_spin():
     """Function to stop the spinner"""
     global isfound
-    isfound = not isfound
+    if isfound :
+        isfound = False
+        return 0
+    isfound = True
+    return 1
+    
 
 
 def main():
